@@ -9,7 +9,8 @@
 import UIKit
 import Alamofire
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    @IBOutlet weak var picker: UIPickerView!
     struct City {
         var name: String
         var lat: Double
@@ -22,10 +23,27 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.picker.delegate = self
+        self.picker.dataSource = self
         AF.request("https://api.darksky.net/forecast/49ef1022ff316233b7ba6be47faa13e6/\(cities[0].lat),\(cities[0].lng)").response { response in
             debugPrint(response)
         }
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return cities.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return cities[row].name
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
 
 
