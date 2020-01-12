@@ -10,7 +10,26 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
+    var days: [Day] = [ Day(day: "WED", image: UIImage(named: "snow"), temp: "10"),
+                       Day(day: "SAT", image: UIImage(named: "cloud"), temp: "16"),
+                       Day(day: "TUE", image: UIImage(named: "sunny"), temp: "6"),
+                       Day(day: "FRI", image: UIImage(named: "storm"), temp: "12"),
+                       Day(day: "MON", image: UIImage(named: "rain"), temp: "8") ]
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return days.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
+        
+        cell.image.image = days[indexPath.row].image
+        cell.day.text = days[indexPath.row].day
+        cell.degrees.text = days[indexPath.row].temp + "°"
+        return cell
+    }
+    
     var currentPosition = 0
     
     @IBOutlet weak var label: UILabel!
@@ -24,6 +43,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         var name: String
         var lat: Float
         var lng: Float
+    }
+    
+    struct Day {
+        var day: String
+        var image: UIImage?
+        var temp: String
     }
     
     var cities: [City] = [City(name: "Tomsk", lat: 56.501041, lng: 84.992455),
@@ -65,9 +90,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     switch response.result {
                     case .success(let data):
                         let jsonData = JSON(data)
+                        print(jsonData)
                         let currentData = jsonData["currently"]
                         let currentTemp = currentData["apparentTemperature"]
-                        self.label.text = "\(currentTemp)"
+                        self.label.text = "\(currentTemp)" + "°F"
                     case .failure(let error):
                         print(error)
                     }
