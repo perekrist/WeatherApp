@@ -8,10 +8,12 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     var currentPosition = 0
     
+    @IBOutlet weak var label: UILabel!
     @IBAction func submitBtn(_ sender: Any) {
         makeRequest(position: currentPosition)
     }
@@ -20,8 +22,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     struct City {
         var name: String
-        var lat: Double
-        var lng: Double
+        var lat: Float
+        var lng: Float
     }
     
     var cities: [City] = [City(name: "Tomsk", lat: 56.501041, lng: 84.992455),
@@ -49,19 +51,30 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("CurrentRow: \(row)")
         currentPosition = row
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
     func makeRequest(position: Int) {
-        AF.request("https://api.darksky.net/forecast/49ef1022ff316233b7ba6be47faa13e6/\(cities[position].lat),\(cities[position].lng)").response { response in
-            debugPrint(response)
-        }
+         let apikey = "49ef1022ff316233b7ba6be47faa13e6"
+        
+        AF.request("https://api.darksky.net/forecast/\(apikey)/\(cities[position].lat),\(cities[position].lng)").validate().responseJSON { response in
+                    switch response.result {
+                    case .success(let data):
+                        let jsonData = JSON(data)
+                        let currentData = jsonData["currently"]
+                        let currentTemp = currentData["apparentTemperature"]
+                        self.label.text = "\(currentTemp)"
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
     }
 
-
 }
+
+
 
