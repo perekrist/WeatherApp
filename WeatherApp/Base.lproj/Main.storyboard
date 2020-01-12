@@ -34,7 +34,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jLt-NO-TcU">
-                                <rect key="frame" x="0.0" y="414" width="414" height="120"/>
+                                <rect key="frame" x="0.0" y="673" width="414" height="120"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="C7l-o2-Qsl"/>
@@ -65,7 +65,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud" translatesAutoresizingMaskIntoConstraints="NO" id="lWp-Wr-l1L">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloudy" translatesAutoresizingMaskIntoConstraints="NO" id="lWp-Wr-l1L">
                                                     <rect key="frame" x="32" y="38" width="48" height="41"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="48" id="BoO-JP-1eC"/>
@@ -100,14 +100,23 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="TgX-jg-ape"/>
                                 </connections>
                             </collectionView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloudy" translatesAutoresizingMaskIntoConstraints="NO" id="B82-te-ci0">
+                                <rect key="frame" x="87" y="394" width="240" height="220"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="220" id="MC5-lO-wC1"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="jLt-NO-TcU" firstAttribute="centerX" secondItem="cRi-Sf-I7H" secondAttribute="centerX" id="8Ai-RP-beQ"/>
                             <constraint firstItem="J3R-24-vVT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="BbQ-DH-ESl"/>
-                            <constraint firstItem="jLt-NO-TcU" firstAttribute="top" secondItem="cRi-Sf-I7H" secondAttribute="bottom" constant="50" id="Bvq-kI-twq"/>
+                            <constraint firstItem="jLt-NO-TcU" firstAttribute="top" secondItem="cRi-Sf-I7H" secondAttribute="bottom" constant="309" id="Bvq-kI-twq"/>
                             <constraint firstItem="L4d-MR-haE" firstAttribute="top" secondItem="J3R-24-vVT" secondAttribute="bottom" id="Fh1-rs-xUd"/>
+                            <constraint firstItem="B82-te-ci0" firstAttribute="top" secondItem="cRi-Sf-I7H" secondAttribute="bottom" constant="30" id="Go4-Aw-RlF"/>
                             <constraint firstItem="cRi-Sf-I7H" firstAttribute="top" secondItem="L4d-MR-haE" secondAttribute="bottom" constant="22" id="Hhb-7o-j0D"/>
+                            <constraint firstItem="B82-te-ci0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="87" id="K1l-K5-TL1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="B82-te-ci0" secondAttribute="trailing" constant="87" id="RBR-Za-Ss0"/>
                             <constraint firstItem="cRi-Sf-I7H" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="U7H-2v-YWj"/>
                             <constraint firstItem="J3R-24-vVT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bdx-fr-ijI"/>
                             <constraint firstItem="jLt-NO-TcU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="euW-py-T6O"/>
@@ -116,6 +125,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="currentImage" destination="B82-te-ci0" id="d4G-2q-mqy"/>
                         <outlet property="label" destination="cRi-Sf-I7H" id="cWw-Ag-kbD"/>
                         <outlet property="picker" destination="J3R-24-vVT" id="vFe-3k-LVT"/>
                     </connections>
@@ -126,6 +136,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cloud" width="512" height="512"/>
+        <image name="cloudy" width="512" height="512"/>
     </resources>
 </document>

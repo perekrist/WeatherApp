@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
     var days: [Day] = [ Day(day: "WED", image: UIImage(named: "snow"), temp: "10"),
-                       Day(day: "SAT", image: UIImage(named: "cloud"), temp: "16"),
+                       Day(day: "SAT", image: UIImage(named: "cloudy"), temp: "16"),
                        Day(day: "TUE", image: UIImage(named: "sunny"), temp: "6"),
                        Day(day: "FRI", image: UIImage(named: "storm"), temp: "12"),
                        Day(day: "MON", image: UIImage(named: "rain"), temp: "8") ]
@@ -26,12 +26,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         cell.image.image = days[indexPath.row].image
         cell.day.text = days[indexPath.row].day
-        cell.degrees.text = days[indexPath.row].temp + "°"
+        cell.degrees.text = (days[indexPath.row].temp ?? "-") + "°"
         return cell
     }
     
     var currentPosition = 0
     
+    @IBOutlet weak var currentImage: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBAction func submitBtn(_ sender: Any) {
         makeRequest(position: currentPosition)
@@ -48,7 +49,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     struct Day {
         var day: String
         var image: UIImage?
-        var temp: String
+        var temp: String?
     }
     
     var cities: [City] = [City(name: "Tomsk", lat: 56.501041, lng: 84.992455),
@@ -93,7 +94,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         print(jsonData)
                         let currentData = jsonData["currently"]
                         let currentTemp = currentData["apparentTemperature"]
+                        let image = currentData["icon"]
+                        
+                        self.currentImage.image = UIImage(named: image.stringValue)
                         self.label.text = "\(currentTemp)" + "°F"
+                        
                     case .failure(let error):
                         print(error)
                     }
